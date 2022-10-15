@@ -1,5 +1,4 @@
-from django.urls import path, include
-
+from django.urls import path
 
 from .views import (
     article_create_view,

@@ -5,7 +5,6 @@ from .models import Article
 from .utils import slugify_instance_title
 
 
-
 class ArticleTestCase(TestCase):
 
     def setUp(self):
@@ -47,7 +46,6 @@ class ArticleTestCase(TestCase):
         unique_slugs = list(set(new_slugs))
         self.assertEqual(len(new_slugs), len(unique_slugs))
 
-
     def test_slugify_instance_title_redux(self):
         slug_list = Article.objects.all().values_list('slug', flat=True)
         unique_slug_list = list(set(slug_list))
@@ -60,4 +58,3 @@ class ArticleTestCase(TestCase):
         self.assertEqual(qs.count(), self.number_of_articles)
         qs = Article.objects.search(query="something else")
         self.assertEqual(qs.count(), self.number_of_articles)
-

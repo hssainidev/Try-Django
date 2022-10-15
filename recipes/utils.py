@@ -21,8 +21,8 @@ def number_str_to_float(amount_str: str) -> (any, bool):
     number_as_float = amount_str
     try:
         number_as_float = float(sum(Fraction(s) for s in f"{amount_str}".split()))
-    except:
-        pass
+    except ArithmeticError:
+        print("error adding number as float")
     if isinstance(number_as_float, float):
         success = True
     return number_as_float, success

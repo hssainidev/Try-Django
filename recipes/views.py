@@ -30,7 +30,7 @@ def recipe_detail_hx_view(request, id=None):
         raise Http404
     try:
         obj = Recipe.objects.get(id=id, user=request.user)
-    except:
+    except Recipe.DoesNotExist:
         obj = None
     if obj is None:
         return HttpResponse("Not Found")
@@ -54,6 +54,7 @@ def recipe_create_view(request):
         return redirect(obj.get_absolute_url())
     return render(request, "recipes/create-update.html", context)
 
+
 @login_required
 def recipe_update_view(request, id=None):
     obj = get_object_or_404(Recipe, id=id, user=request.user)
@@ -75,7 +76,7 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
         raise Http404
     try:
         parent_obj = Recipe.objects.get(id=parent_id, user=request.user)
-    except:
+    except Recipe.DoesNotExist:
         parent_obj = None
     if parent_obj is None:
         return HttpResponse("Not Found")
@@ -83,7 +84,7 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
     if id is not None:
         try:
             instance = RecipeIngredient.objects.get(recipe=parent_obj, id=id)
-        except:
+        except RecipeIngredient.DoesNotExist:
             instance = None
     form = RecipeIngredientForm(request.POST or None, instance=instance)
     url = reverse("recipes:hx-ingredient-create", kwargs={"parent_id": parent_obj.id})

@@ -1,10 +1,10 @@
-from django.db import models
-from django.conf import settings
 import pint
+from django.conf import settings
+from django.db import models
 from django.urls import reverse
 
-from .validators import validate_unit_of_measure
 from .utils import number_str_to_float
+from .validators import validate_unit_of_measure
 
 
 # Create your models here.
@@ -43,6 +43,7 @@ class RecipeIngredient(models.Model):
     directions = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
     # active = models.BooleanField(default=True)
 
     def get_absolute_url(self):
@@ -54,7 +55,6 @@ class RecipeIngredient(models.Model):
             "id": self.id
         }
         return reverse("recipes:hx-ingredient-detail", kwargs=kwargs)
-
 
     def convert_to_system(self, system="mks"):
         if self.quantity_as_float is None:

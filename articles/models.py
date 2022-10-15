@@ -1,13 +1,14 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import pre_save, post_save
-from django.utils import timezone
-from django.utils.text import slugify
 from django.urls import reverse
+from django.utils import timezone
+
 from .utils import slugify_instance_title
-from django.conf import settings
 
 User = settings.AUTH_USER_MODEL
+
 
 class ArticleQuerySet(models.QuerySet):
     def search(self, query=None):
@@ -20,7 +21,6 @@ class ArticleQuerySet(models.QuerySet):
 class ArticleManager(models.Manager):
     def get_queryset(self):
         return ArticleQuerySet(self.model, using=self._db)
-
 
     def search(self, query):
         return self.get_queryset().search(query=query)
@@ -37,7 +37,6 @@ class Article(models.Model):
     publish = models.DateTimeField(auto_now=False, auto_now_add=False, default=timezone.now, null=True, blank=True)
 
     objects = ArticleManager()
-
 
     def get_absolute_url(self):
         # return f'/articles/{self.slug}'

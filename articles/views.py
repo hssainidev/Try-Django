@@ -25,7 +25,7 @@ def article_detail_view(request, slug=None):
             raise Http404
         except Article.MultipleObjectsReturned:
             article_obj = Article.objects.filter(slug=slug).first()
-        except:
+        except Http404:
             raise Http404
 
     context = {
