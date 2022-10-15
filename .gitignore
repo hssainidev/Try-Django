@@ -4,3 +4,4 @@ venv/
 /.idea/
 /.env
 /try_django.code-workspace
+__pycache__/
